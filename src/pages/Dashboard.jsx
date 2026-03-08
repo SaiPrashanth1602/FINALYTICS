@@ -51,7 +51,7 @@ function Dashboard() {
   const insights = generateAIInsights()
 
   return (
-    <div className="p-6 bg-background min-h-screen text-foreground transition-colors duration-500 overflow-x-hidden">
+    <div id="dashboard" className="p-6 bg-background min-h-screen text-foreground transition-colors duration-500 overflow-x-hidden">
       <CommandMenu />
 
       {/* 🚀 HEADER SECTION */}

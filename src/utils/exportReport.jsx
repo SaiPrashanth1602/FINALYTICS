@@ -1,19 +1,43 @@
 import jsPDF from "jspdf";
 import { toPng } from "html-to-image";
 
-// src/utils/exportReport.js
-export const exportReport = () => {
+export const exportReport = async () => {
   try {
-    const reportData = "BITWARS SYSTEM AUDIT\nStatus: Verified\nNodes: Stable";
-    const blob = new Blob([reportData], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'BitWars_Audit.txt');
-    document.body.appendChild(link);
-    link.click();
-    link.parentNode.removeChild(link);
+    const element = document.getElementById("dashboard");
+
+    if (!element) {
+      console.error("Dashboard element not found");
+      return;
+    }
+
+    const dataUrl = await toPng(element, { pixelRatio: 2 });
+
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    const imgProps = pdf.getImageProperties(dataUrl);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    const pageHeight = pdf.internal.pageSize.getHeight();
+
+    let heightLeft = pdfHeight;
+    let position = 0;
+
+    // first page
+    pdf.addImage(dataUrl, "PNG", 0, position, pdfWidth, pdfHeight);
+    heightLeft -= pageHeight;
+
+    // extra pages
+    while (heightLeft > 0) {
+      position = heightLeft - pdfHeight;
+      pdf.addPage();
+      pdf.addImage(dataUrl, "PNG", 0, position, pdfWidth, pdfHeight);
+      heightLeft -= pageHeight;
+    }
+
+    pdf.save("Finalytics_Audit_Report.pdf");
+
   } catch (error) {
-    console.error("Audit Export Failed:", error);
+    console.error("Export failed:", error);
   }
 };
