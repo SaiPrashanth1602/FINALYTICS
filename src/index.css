@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  /* Branding & Functional Colors */
+  --color-background: #020617;
+  --color-foreground: #f8fafc;
+  --color-card: #0f172a;
+  --color-card-foreground: #f8fafc;
+  --color-border: #1e293b;
+
+  --color-bitwars-primary: #3b82f6;
+  --color-bitwars-secondary: #8b5cf6;
+  --color-bitwars-accent: #10b981;
+
+  /* Keyframes for your animations */
+  @keyframes fade-in-slide {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes border-glow {
+    0% { border-color: rgba(59, 130, 246, 0.2); }
+    100% { 
+      border-color: rgba(59, 130, 246, 0.6); 
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); 
+    }
+  }
+
+  /* Mapping animations to classes */
+  --animation-fade-in-slide: fade-in-slide 0.5s ease-out;
+  --animation-border-glow: border-glow 3s ease-in-out infinite alternate;
+}
+
+@layer base {
+  * {
+    /* Use the variable defined in @theme */
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    @apply antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.05) 0px, transparent 50%);
+  }
+}
+
+/* Custom Scrollbar for the Dashboard */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
