@@ -28,7 +28,7 @@ function Sidebar() {
           Systems
         </p>
         {menuItems.map((item) => {
-          const isActive = location.pathname === item.path;
+          const isActive = location.hash === `#${item.path}` || (item.path === "/" && location.hash === "");
           return (
             <Link
               key={item.name}
