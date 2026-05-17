@@ -6,11 +6,13 @@
   "homepage": "https://saiprashanth1602.github.io/FINALYTICS",
   "scripts": {
     "dev": "vite",
+    "dev:full": "node scripts/dev.js",
+    "server": "node server.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-  "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

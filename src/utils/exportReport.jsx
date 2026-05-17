@@ -3,14 +3,19 @@ import { toPng } from "html-to-image";
 
 export const exportReport = async () => {
   try {
-    const element = document.getElementById("dashboard");
+    const element = document.getElementById("dashboard") || document.getElementById("report-root");
 
     if (!element) {
-      console.error("Dashboard element not found");
-      return;
+      throw new Error("Nothing reportable is visible yet.");
     }
 
-    const dataUrl = await toPng(element, { pixelRatio: 2 });
+    const dataUrl = await toPng(element, {
+      pixelRatio: 2,
+      cacheBust: true,
+      backgroundColor: getComputedStyle(document.documentElement)
+        .getPropertyValue("--app-background")
+        .trim() || "#ffffff",
+    });
 
     const pdf = new jsPDF("p", "mm", "a4");
 
@@ -36,8 +41,13 @@ export const exportReport = async () => {
     }
 
     pdf.save("Finalytics_Audit_Report.pdf");
+    return { ok: true, filename: "Finalytics_Audit_Report.pdf" };
 
   } catch (error) {
     console.error("Export failed:", error);
+    return {
+      ok: false,
+      message: error instanceof Error ? error.message : "Export failed.",
+    };
   }
 };

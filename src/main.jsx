@@ -2,9 +2,12 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import { FinancialDataProvider } from './context/FinancialDataContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <FinancialDataProvider>
+      <App />
+    </FinancialDataProvider>
   </StrictMode>,
 )

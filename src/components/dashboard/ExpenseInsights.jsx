@@ -1,38 +1,36 @@
 import { Card } from "../ui/card"
+import { formatCurrency } from "../../data/mockData"
 
-function ExpenseInsights() {
-
-  const categories = [
-    { name: "Salaries", amount: 40000 },
-    { name: "Rent", amount: 20000 },
-    { name: "Marketing", amount: 15000 }
-  ]
-
+function ExpenseInsights({ insights }) {
   return (
-    <div style={{ marginTop: "30px" }}>
-      <Card>
-        <div style={{ padding: "20px" }}>
-          <h3>Top Expense Categories</h3>
+    <Card className="bg-slate-900/40 border-slate-800 p-6">
+      <h3 className="text-sm font-semibold uppercase tracking-widest text-slate-400 mb-5">
+        Top Expense Categories
+      </h3>
 
-          <div style={{ marginTop: "15px" }}>
-            {categories.map((c, i) => (
+      <div className="space-y-4">
+        {insights.map((category) => (
+          <div
+            key={category.name}
+            className="rounded-2xl border border-white/5 bg-white/5 p-4"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-semibold text-slate-200">{category.name}</span>
+              <span className="text-sm font-mono text-slate-300">{formatCurrency(category.value)}</span>
+            </div>
+            <div className="h-2 rounded-full bg-slate-800 overflow-hidden">
               <div
-                key={i}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: "8px"
-                }}
-              >
-                <span>{c.name}</span>
-                <span>₹{c.amount}</span>
-              </div>
-            ))}
+                className="h-full rounded-full bg-blue-500"
+                style={{ width: `${Math.min(category.share, 100)}%` }}
+              />
+            </div>
+            <p className="text-[11px] text-slate-500 mt-2">
+              {category.share.toFixed(1)}% of total expenses
+            </p>
           </div>
-
-        </div>
-      </Card>
-    </div>
+        ))}
+      </div>
+    </Card>
   )
 }
 

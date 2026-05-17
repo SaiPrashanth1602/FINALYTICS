@@ -1,24 +1,41 @@
 import { Badge } from "../ui/badge"
-import { Card } from "../ui/card"
-import { ExternalLink, AlertTriangle, ShieldCheck, Activity } from "lucide-react"
+import { CheckCircle2, AlertTriangle, ShieldCheck, Activity } from "lucide-react"
+import { formatCurrency, formatDueDate } from "../../data/mockData"
 
 function calculateVendorRisk(amount) {
-  const value = parseInt(amount.replace(/[^0-9]/g, ''))
-  if (value > 30000) return { label: "High", color: "rose", icon: <AlertTriangle size={12} /> }
-  if (value > 15000) return { label: "Medium", color: "amber", icon: <Activity size={12} /> }
-  return { label: "Low", color: "emerald", icon: <ShieldCheck size={12} /> }
+  if (amount > 30000) {
+    return {
+      label: "High",
+      icon: <AlertTriangle size={12} />,
+      className: "bg-rose-500/10 text-rose-400 border-rose-500/20",
+    }
+  }
+
+  if (amount > 15000) {
+    return {
+      label: "Medium",
+      icon: <Activity size={12} />,
+      className: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+    }
+  }
+
+  return {
+    label: "Low",
+    icon: <ShieldCheck size={12} />,
+    className: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  }
 }
 
-function VendorTable({ vendors = [] }) {
+function VendorTable({ vendors = [], onToggleStatus }) {
   return (
-    <Card className="bg-white dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm dark:shadow-none transition-colors">
-      <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+    <div className="overflow-hidden rounded-2xl border border-border bg-card/60 transition-colors">
+      <div className="p-6 border-b border-border flex justify-between items-center">
         <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
           Vendor Payments
         </h3>
-        <button className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium transition-colors">
-          View All Transactions
-        </button>
+        <span className="text-xs text-slate-500 font-medium transition-colors">
+          {vendors.filter((vendor) => vendor.status !== "Paid").length} pending
+        </span>
       </div>
 
       <div className="overflow-x-auto">
@@ -35,66 +52,73 @@ function VendorTable({ vendors = [] }) {
           </thead>
 
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-            {vendors.map((v, i) => {
-              const risk = calculateVendorRisk(v.amount);
+            {vendors.map((vendor) => {
+              const risk = calculateVendorRisk(vendor.amount)
+
               return (
-                <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors group">
-                  {/* Vendor Info */}
+                <tr key={vendor.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors group">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       <div className="h-8 w-8 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-[10px] font-bold text-slate-600 dark:text-slate-300">
-                        {v.vendor.substring(0, 2).toUpperCase()}
+                        {vendor.vendor.substring(0, 2).toUpperCase()}
                       </div>
-                      <span className="font-medium text-slate-700 dark:text-slate-200 truncate max-w-[120px]">
-                        {v.vendor}
-                      </span>
+                      <div>
+                        <span className="block font-medium text-slate-700 dark:text-slate-200 truncate max-w-[160px]">
+                          {vendor.vendor}
+                        </span>
+                        <span className="block text-[11px] uppercase tracking-widest text-slate-500">
+                          {vendor.category}
+                        </span>
+                      </div>
                     </div>
                   </td>
 
-                  {/* Amount */}
                   <td className="px-6 py-4 text-center">
                     <span className="font-mono text-slate-600 dark:text-slate-300 font-medium">
-                      {v.amount}
+                      {formatCurrency(vendor.amount)}
                     </span>
                   </td>
 
-                  {/* Risk Badge (New Column) */}
                   <td className="px-6 py-4 text-center">
-                    <Badge className={`flex items-center gap-1.5 justify-center bg-${risk.color}-500/10 text-${risk.color}-600 dark:text-${risk.color}-400 border-${risk.color}-500/20`}>
+                    <Badge className={`flex items-center gap-1.5 justify-center ${risk.className}`}>
                       {risk.icon}
                       {risk.label}
                     </Badge>
                   </td>
 
-                  {/* Payment Status */}
                   <td className="px-6 py-4 text-center">
-                    <Badge className={
-                      v.status === "Paid"
-                        ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
-                        : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20"
-                    }>
-                      {v.status}
+                    <Badge
+                      className={
+                        vendor.status === "Paid"
+                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
+                          : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20"
+                      }
+                    >
+                      {vendor.status}
                     </Badge>
                   </td>
 
-                  {/* Due Date */}
                   <td className="px-6 py-4 text-center text-sm text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">
-                    {v.due}
+                    {formatDueDate(vendor.due)}
                   </td>
 
-                  {/* Action */}
                   <td className="px-6 py-4 text-right">
-                    <button className="p-2 text-slate-400 hover:text-blue-600 dark:hover:text-slate-200 opacity-0 group-hover:opacity-100 transition-all">
-                      <ExternalLink size={16} />
+                    <button
+                      type="button"
+                      onClick={() => onToggleStatus(vendor.id)}
+                      className="focus-ring inline-flex items-center gap-2 rounded-xl border border-border px-3 py-2 text-[11px] font-bold uppercase tracking-widest text-slate-600 dark:text-slate-300 transition-all hover:bg-slate-100 dark:hover:bg-white/5"
+                    >
+                      <CheckCircle2 size={14} />
+                      {vendor.status === "Paid" ? "Reopen" : "Mark Paid"}
                     </button>
                   </td>
                 </tr>
-              );
+              )
             })}
           </tbody>
         </table>
       </div>
-    </Card>
+    </div>
   )
 }
 

@@ -1,16 +1,8 @@
-import type { InputHTMLAttributes, ReactNode } from "react";
-
-function cx(...classes: Array<string | undefined>) {
+function cx(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function ExampleCard({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function ExampleCard({ children, className }) {
   return (
     <div
       className={cx(
@@ -23,15 +15,15 @@ export function ExampleCard({
   );
 }
 
-export function ExampleTitle({ children }: { children: ReactNode }) {
+export function ExampleTitle({ children }) {
   return <h3 className="text-2xl font-medium tracking-tight text-foreground">{children}</h3>;
 }
 
-export function ExampleDescription({ children }: { children: ReactNode }) {
+export function ExampleDescription({ children }) {
   return <p className="text-sm leading-relaxed text-muted-foreground">{children}</p>;
 }
 
-export function ExampleInput(props: InputHTMLAttributes<HTMLInputElement>) {
+export function ExampleInput(props) {
   return (
     <input
       {...props}
@@ -43,13 +35,7 @@ export function ExampleInput(props: InputHTMLAttributes<HTMLInputElement>) {
   );
 }
 
-export function ExampleChip({
-  children,
-  active,
-}: {
-  children: ReactNode;
-  active?: boolean;
-}) {
+export function ExampleChip({ children, active }) {
   return (
     <span
       className={cx(
@@ -68,7 +54,7 @@ export function ExampleSeparator() {
   return <div className="h-px w-full bg-border/40" />;
 }
 
-export function ExampleProgress({ value }: { value: number }) {
+export function ExampleProgress({ value }) {
   const width = Math.max(0, Math.min(100, value));
   return (
     <div className="h-2 w-full overflow-hidden rounded-full bg-muted/40">
@@ -77,7 +63,7 @@ export function ExampleProgress({ value }: { value: number }) {
   );
 }
 
-export function ExampleToggle({ enabled }: { enabled: boolean }) {
+export function ExampleToggle({ enabled }) {
   return (
     <span
       className={cx(

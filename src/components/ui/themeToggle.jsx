@@ -23,7 +23,7 @@ export function ThemeToggle() {
 
   return (
     <label className="inline-flex cursor-pointer items-center gap-3 group">
-      <span className="text-sm font-medium text-slate-400 group-hover:text-slate-200 transition-colors">
+      <span className="text-sm font-medium app-muted group-hover:text-foreground transition-colors">
         {isDark ? "Dark Mode" : "Light Mode"}
       </span>
       <div className="relative">
@@ -34,9 +34,9 @@ export function ThemeToggle() {
           onChange={() => setIsDark(!isDark)}
         />
         {/* Toggle Track */}
-        <div className="h-6 w-11 rounded-full bg-slate-800 border border-slate-700 transition-colors 
+        <div className="h-6 w-11 rounded-full bg-slate-200 dark:bg-slate-800 border border-border transition-colors 
           after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full 
-          after:bg-slate-400 after:transition-all 
+          after:bg-white dark:after:bg-slate-400 after:shadow-sm after:transition-all 
           peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:bg-white">
         </div>
       </div>

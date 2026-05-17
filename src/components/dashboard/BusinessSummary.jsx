@@ -1,23 +1,24 @@
 import { Card } from "../ui/card"
 
-function BusinessSummary() {
-
+function BusinessSummary({ summary, lastUpdated }) {
   return (
-    <div style={{ marginTop: "30px" }}>
-      <Card>
-        <div style={{ padding: "20px" }}>
-          <h3>AI Business Summary</h3>
+    <Card className="bg-slate-900/40 border-slate-800 p-6">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-sm font-semibold uppercase tracking-widest text-slate-400">
+          AI Business Summary
+        </h3>
+        <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500">
+          {new Date(lastUpdated).toLocaleTimeString("en-IN", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </span>
+      </div>
 
-          <p style={{ marginTop: "10px" }}>
-            Your business is showing healthy revenue growth with stable cash
-            reserves. However, marketing expenses are rising faster than
-            operational growth. Consider optimizing marketing campaigns to
-            improve profitability.
-          </p>
-
-        </div>
-      </Card>
-    </div>
+      <p className="text-sm leading-7 text-slate-300">
+        {summary}
+      </p>
+    </Card>
   )
 }
 

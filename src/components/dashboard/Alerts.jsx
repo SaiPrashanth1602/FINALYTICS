@@ -1,12 +1,11 @@
 // src/components/dashboard/Alerts.jsx
 
-import { Card } from "../ui/card"
 import { AlertCircle, BellRing, ChevronRight } from "lucide-react"
 
 function Alerts({ alerts }) {
 
   return (
-    <Card className="bg-slate-900/40 border-slate-800 p-6 h-full">
+    <div className="h-full">
 
       <div className="flex items-center gap-2 mb-6">
         <BellRing className="text-rose-500 animate-bounce" size={18} />
@@ -18,7 +17,7 @@ function Alerts({ alerts }) {
       <div className="grid gap-3">
 
         {alerts.length === 0 && (
-          <div className="text-xs text-slate-400">
+          <div className="text-xs app-muted">
             No financial risks detected.
           </div>
         )}
@@ -32,7 +31,7 @@ function Alerts({ alerts }) {
                 ? "bg-rose-500/5 border-rose-500/20 hover:border-rose-500/40"
                 : a.type === "warning"
                 ? "bg-amber-500/5 border-amber-500/20 hover:border-amber-500/40"
-                : "bg-slate-800/30 border-slate-700/50 hover:border-slate-600"
+                : "app-panel border-border hover:border-blue-500/30"
             }`}
           >
 
@@ -45,7 +44,7 @@ function Alerts({ alerts }) {
                     ? "text-rose-500"
                     : a.type === "warning"
                     ? "text-amber-400"
-                    : "text-slate-400"
+                    : "text-blue-500"
                 }
               />
 
@@ -55,7 +54,7 @@ function Alerts({ alerts }) {
                     ? "text-rose-200"
                     : a.type === "warning"
                     ? "text-amber-200"
-                    : "text-slate-300"
+                    : "text-card-foreground"
                 }`}
               >
                 {a.message}
@@ -74,7 +73,7 @@ function Alerts({ alerts }) {
 
       </div>
 
-    </Card>
+    </div>
   )
 }
 

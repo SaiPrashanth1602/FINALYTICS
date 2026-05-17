@@ -2,11 +2,11 @@
 
 @theme {
   /* Branding & Functional Colors */
-  --color-background: #020617;
-  --color-foreground: #f8fafc;
-  --color-card: #0f172a;
-  --color-card-foreground: #f8fafc;
-  --color-border: #1e293b;
+  --color-background: var(--app-background);
+  --color-foreground: var(--app-foreground);
+  --color-card: var(--app-card);
+  --color-card-foreground: var(--app-card-foreground);
+  --color-border: var(--app-border);
 
   --color-bitwars-primary: #3b82f6;
   --color-bitwars-secondary: #8b5cf6;
@@ -32,6 +32,34 @@
 }
 
 @layer base {
+  :root {
+    --app-background: #f5f7fb;
+    --app-foreground: #0f172a;
+    --app-card: #ffffff;
+    --app-card-foreground: #0f172a;
+    --app-border: #dbe3ef;
+    --app-muted: #64748b;
+    --app-panel: rgba(255, 255, 255, 0.82);
+    --app-panel-strong: rgba(255, 255, 255, 0.95);
+    --app-sidebar: rgba(255, 255, 255, 0.9);
+    --app-hover: rgba(15, 23, 42, 0.06);
+    --app-ring: rgba(59, 130, 246, 0.28);
+  }
+
+  :root.dark {
+    --app-background: #020617;
+    --app-foreground: #f8fafc;
+    --app-card: #0f172a;
+    --app-card-foreground: #f8fafc;
+    --app-border: #1e293b;
+    --app-muted: #94a3b8;
+    --app-panel: rgba(15, 23, 42, 0.54);
+    --app-panel-strong: rgba(15, 23, 42, 0.9);
+    --app-sidebar: rgba(2, 6, 23, 0.66);
+    --app-hover: rgba(255, 255, 255, 0.07);
+    --app-ring: rgba(59, 130, 246, 0.4);
+  }
+
   * {
     /* Use the variable defined in @theme */
     border-color: var(--color-border);
@@ -45,6 +73,45 @@
     background-image: 
       radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
       radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.05) 0px, transparent 50%);
+  }
+
+  button,
+  a,
+  input {
+    outline-color: var(--app-ring);
+  }
+}
+
+@layer components {
+  .app-panel {
+    background: var(--app-panel);
+    color: var(--app-card-foreground);
+    border-color: var(--app-border);
+  }
+
+  .app-panel-strong {
+    background: var(--app-panel-strong);
+    color: var(--app-card-foreground);
+    border-color: var(--app-border);
+  }
+
+  .app-sidebar {
+    background: var(--app-sidebar);
+    color: var(--app-foreground);
+    border-color: var(--app-border);
+  }
+
+  .app-muted {
+    color: var(--app-muted);
+  }
+
+  .app-hover:hover {
+    background: var(--app-hover);
+  }
+
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--app-ring);
+    outline-offset: 2px;
   }
 }
 

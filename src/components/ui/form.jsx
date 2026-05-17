@@ -1,22 +1,8 @@
-import type {
-  ButtonHTMLAttributes,
-  InputHTMLAttributes,
-  ReactNode,
-  SelectHTMLAttributes,
-  TextareaHTMLAttributes,
-} from "react";
-
-function cx(...classes: Array<string | undefined>) {
+function cx(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function FormCard({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function FormCard({ children, className }) {
   return (
     <div
       className={cx(
@@ -29,15 +15,7 @@ export function FormCard({
   );
 }
 
-export function FormSection({
-  title,
-  description,
-  children,
-}: {
-  title: string;
-  description?: string;
-  children: ReactNode;
-}) {
+export function FormSection({ title, description, children }) {
   return (
     <fieldset className="flex flex-col gap-4">
       <legend className="mb-1 text-xl font-medium tracking-tight">{title}</legend>
@@ -51,19 +29,7 @@ export function FormDivider() {
   return <div className="h-px w-full bg-border/50" />;
 }
 
-export function FormField({
-  htmlFor,
-  label,
-  helper,
-  children,
-  className,
-}: {
-  htmlFor: string;
-  label: string;
-  helper?: string;
-  children: ReactNode;
-  className?: string;
-}) {
+export function FormField({ htmlFor, label, helper, children, className }) {
   return (
     <div className={cx("flex w-full flex-col gap-1.5", className)}>
       <label htmlFor={htmlFor} className="text-sm font-medium text-foreground">
@@ -75,7 +41,7 @@ export function FormField({
   );
 }
 
-export function FormInput(props: InputHTMLAttributes<HTMLInputElement>) {
+export function FormInput(props) {
   return (
     <input
       {...props}
@@ -87,7 +53,7 @@ export function FormInput(props: InputHTMLAttributes<HTMLInputElement>) {
   );
 }
 
-export function FormSelect(props: SelectHTMLAttributes<HTMLSelectElement>) {
+export function FormSelect(props) {
   return (
     <select
       {...props}
@@ -99,16 +65,7 @@ export function FormSelect(props: SelectHTMLAttributes<HTMLSelectElement>) {
   );
 }
 
-export function FormCheckbox({
-  id,
-  label,
-  className,
-  ...props
-}: {
-  id: string;
-  label: string;
-  className?: string;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "id">) {
+export function FormCheckbox({ id, label, className, ...props }) {
   return (
     <label htmlFor={id} className="flex items-center gap-2 text-sm text-foreground">
       <input
@@ -122,7 +79,7 @@ export function FormCheckbox({
   );
 }
 
-export function FormTextarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
+export function FormTextarea(props) {
   return (
     <textarea
       {...props}
@@ -134,18 +91,11 @@ export function FormTextarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>)
   );
 }
 
-export function FormActions({ children }: { children: ReactNode }) {
+export function FormActions({ children }) {
   return <div className="flex items-center gap-2">{children}</div>;
 }
 
-export function FormButton({
-  children,
-  variant = "default",
-  ...props
-}: {
-  children: ReactNode;
-  variant?: "default" | "outline" | "ghost";
-} & ButtonHTMLAttributes<HTMLButtonElement>) {
+export function FormButton({ children, variant = "default", ...props }) {
   const variantClass =
     variant === "outline"
       ? "border-border bg-background text-foreground hover:bg-muted"

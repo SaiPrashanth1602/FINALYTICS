@@ -58,9 +58,9 @@ export function CommandMenu() {
 
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-start justify-center pt-40 z-50">
 
-      <div className="bg-slate-900 border border-slate-800 rounded-xl w-[500px] shadow-2xl">
+      <div className="app-panel-strong border rounded-xl w-[500px] shadow-2xl">
 
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-800 text-slate-400">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-border app-muted">
           <Search size={16}/>
           <span className="text-sm">Type a command...</span>
         </div>
@@ -75,7 +75,7 @@ export function CommandMenu() {
                 cmd.action()
                 setOpen(false)
               }}
-              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-800 text-sm text-slate-300 transition"
+              className="focus-ring w-full flex items-center gap-3 px-4 py-3 app-hover text-sm text-foreground transition"
             >
               {cmd.icon}
               {cmd.label}
